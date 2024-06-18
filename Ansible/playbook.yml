@@ -1,0 +1,43 @@
+---
+- name: Configure Ubuntu VM
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install necessary packages
+      apt:
+        name:
+          - python3
+          - openssh-server
+          - sudo
+        state: present
+
+    - name: Add user and set password
+      user:
+        name: anakin
+        password: "eumesmo"
+        shell: /bin/bash
+        createhome: yes
+
+    - name: Ensure SSH key for user
+      authorized_key:
+        user: anakin
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"  # Insira o caminho da sua chave pública SSH
+
+    - name: Permitir autenticação por senha no SSH
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PasswordAuthentication'
+        line: 'PasswordAuthentication yes'
+        state: present
+      notify: restart ssh
+
+  handlers:
+    - name: restart ssh
+      service:
+        name: ssh
+        state: restarted
