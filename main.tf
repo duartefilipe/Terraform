@@ -18,8 +18,13 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   name        = "terraform"
   target_node = "anakin"  # Nome do seu nó Proxmox
 
-  iso         = "local:iso/ubuntu-24.04-live-server-amd64.iso"
+#se quioser clonar
+#clone = "Anakin" # Substitua pelo ID do modelo que você deseja clonar
 
+  # Se quiser criar uma nova VM com um ISO
+  iso = "local:iso/ubuntu-24.04-live-server-amd64.iso"
+
+  # Se quiser criar uma nova VM
   os_type     = "cloud-init"
   cores       = 2
   sockets     = 1
@@ -27,10 +32,10 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   scsihw      = "virtio-scsi-pci"
   bootdisk    = "scsi0"
 
-  disk {
+disk {
     type      = "scsi"
     storage   = "local"
-    size      = "50G"
+    size      = "15G"
   }
 
   network {
@@ -38,7 +43,7 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
     bridge    = "vmbr0"
   }
 
-  boot = "cdn" 
+  boot = "cdn"  # Definir o CD-ROM como dispositivo de boot
 
   lifecycle {
     ignore_changes = [
