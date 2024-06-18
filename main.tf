@@ -49,7 +49,7 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   provisioner "remote-exec" {
     inline = [
       "export ANSIBLE_HOST_KEY_CHECKING=False",
-      "curl -o /tmp/playbook.yml -L https://raw.githubusercontent.com/duartefilipe/Automacoes/main/Ansible/playbook.yml?token=GHSAT0AAAAAACRPXEMQXCZZG7TDEDBRYYGCZTRUQJA",
+      "curl -o /tmp/playbook.yml -L https://raw.githubusercontent.com/duartefilipe/Terraform/main/Ansible/playbook.yml",
       "apt-get update && apt-get install -y ansible",
       "VM_IP=$(qm guest exec ${self.id} -- ip -4 addr show eth0 | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}')",
       "echo $VM_IP > /tmp/ip_address.txt",
