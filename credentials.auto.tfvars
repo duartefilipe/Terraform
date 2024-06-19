@@ -1,0 +1,6 @@
+proxmox_api_url = "https://192.168.100.37:8006/api2/json"
+proxmox_api_token_id = "root@pam!terraform"
+proxmox_api_token_secret = "37094789-9ecc-4e09-877f-f6004ce78d68"
+private_key_path = "~/.ssh/id_ed25519"
+public_key_path = "~/.ssh/id_ed25519.pub"
+ansible_user = ""
